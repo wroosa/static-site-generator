@@ -1,5 +1,5 @@
 from textnode import TextNode, TextType
-from htmlnode import HTMLNode
+from htmlnode import HTMLNode, LeafNode
 
 def main():
     test_node = TextNode(
@@ -7,21 +7,13 @@ def main():
         TextType.LINK,
         'https://isitchristmas.com/',
     )
-    node = HTMLNode(
+    node = LeafNode(
             "div", 
-            "This is a div boi!", 
-            None, 
-            {'class': 'nav-list', 'href': 'link.com'},
-        )
-    
-    node2 = HTMLNode(
-            "div", 
-            "This is a div boi!", 
-            None, 
+            "This is a div boi!",
             {'class': 'nav-list', 'href': 'link.com'},
         )
 
-    print(node.__repr__() == node2.__repr__())
+    print(node.to_html())
 
 if __name__ == "__main__":
     main()
