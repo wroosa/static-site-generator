@@ -16,7 +16,7 @@ class HTMLNode:
             return attributes
         
         for prop in self.props:
-            attributes += f' {prop}={self.props[prop]}'
+            attributes += f' {prop}="{self.props[prop]}"'
         return attributes
     
     def __repr__(self):

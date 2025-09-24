@@ -13,7 +13,7 @@ class TestHTMLNode(unittest.TestCase):
         )
     
     def test_props_to_html(self):
-        self.assertEqual(self.node.props_to_html(), " class=nav-list href=link.com")
+        self.assertEqual(self.node.props_to_html(), ' class="nav-list" href="link.com"')
         self.assertNotEqual(self.node.props_to_html(), " class= href=")
         node = HTMLNode(
             "div", 
@@ -41,7 +41,7 @@ class TestLeafNode(unittest.TestCase):
         self.assertEqual(
             node.to_html(), 
             (
-                "<div class=nav-list href=link.com>This is a div boi!</div>"
+                '<div class="nav-list" href="link.com">This is a div boi!</div>'
             )
         )
         node = LeafNode("p", "Hello, world!")
@@ -80,7 +80,7 @@ class TestParentNode(unittest.TestCase):
             parent_node = ParentNode("div", [child_node])
             self.assertEqual(
                 parent_node.to_html(),
-                "<div><span><b>grandchild</b><b class=baby>grandchild</b></span></div>",
+                '<div><span><b>grandchild</b><b class="baby">grandchild</b></span></div>',
             )
 
 if __name__ == "__main__":
