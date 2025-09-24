@@ -1,6 +1,5 @@
 
 
-
 class HTMLNode:
     def __init__(self, tag=None, value=None, children=None, props=None):
         self.tag = tag 
@@ -25,4 +24,3 @@ class HTMLNode:
             f"props={self.props}",
         ]
         return f"HTMLNode({', '.join(parts)})"
-

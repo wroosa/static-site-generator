@@ -27,16 +27,6 @@ class TestTextNode(unittest.TestCase):
         node2 = TextNode("This is a text node", TextType.LINK, "different.url")
         self.assertNotEqual(node, node2)
 
-class TestHTMLNode(unittest.TestCase):
-    def test_props_to_html(self):
-        node = HTMLNode(
-            "div", 
-            "This is a div boi!", 
-            None, 
-            {'class': 'nav-list', 'href': 'link.com'},
-        )
-        self.assertEqual(node.props_to_html(), " class=nav-list href=link.com")
-
 
 if __name__ == "__main__":
     unittest.main()

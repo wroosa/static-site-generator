@@ -7,16 +7,21 @@ def main():
         TextType.LINK,
         'https://isitchristmas.com/',
     )
-    childNode1 = HTMLNode("p", "This is a child", props={'class': 'child'})
-    childNode2 = HTMLNode("a", "This is a child")
     node = HTMLNode(
-        "div", 
-        "This is a div boi!", 
-        [childNode1, childNode2], 
-        {'class': 'nav-list', 'href': 'link.com'},
-    )
+            "div", 
+            "This is a div boi!", 
+            None, 
+            {'class': 'nav-list', 'href': 'link.com'},
+        )
+    
+    node2 = HTMLNode(
+            "div", 
+            "This is a div boi!", 
+            None, 
+            {'class': 'nav-list', 'href': 'link.com'},
+        )
 
-    print(node.props_to_html())
+    print(node.__repr__() == node2.__repr__())
 
 if __name__ == "__main__":
     main()
