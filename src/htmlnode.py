@@ -24,3 +24,16 @@ class HTMLNode:
             f"props={self.props}",
         ]
         return f"HTMLNode({', '.join(parts)})"
+    
+class LeafNode(HTMLNode):
+    def __init__(self, tag, value, props=None):
+        super().__init__(tag, value, None, props)
+
+    def to_html(self):
+        if self.value is None:
+            raise ValueError('All lead nodes must have a value')
+        if self.tag is None:
+            return self.value
+        t = self.tag
+        v = self.value
+        return f"<{t}{self.props_to_html()}>{v}</{t}>"
