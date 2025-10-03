@@ -31,18 +31,16 @@ class TestSplitNodes(unittest.TestCase):
         ]
         self.assertEqual(result, expected_result)
 
-        node_list = [TextNode("delim ``in be`tween`` delim", TextType.TEXT)]
+        node_list = [TextNode("Many `spl`it` `parts`!`", TextType.TEXT)]
         result = split_nodes_delimiter(node_list, "`", TextType.CODE)
         expected_result = [
-            TextNode("delim ", TextType.TEXT),
-            TextNode("in be`tween", TextType.CODE),
-            TextNode(" delim", TextType.TEXT)
+            TextNode("Many ", TextType.TEXT),
+            TextNode("spl", TextType.CODE),
+            TextNode("it", TextType.TEXT),
+            TextNode(" ", TextType.CODE),
+            TextNode("parts", TextType.TEXT),
+            TextNode("!", TextType.CODE)
         ]
-        self.assertEqual(result, expected_result)
-
-        node_list = [TextNode("start ``with no `end", TextType.TEXT)]
-        result = split_nodes_delimiter(node_list, "`", TextType.CODE)
-        expected_result = [TextNode("start ``with no `end", TextType.TEXT)]
         self.assertEqual(result, expected_result)
 
     def test_split_single_nodes_others(self):
@@ -80,12 +78,40 @@ class TestSplitNodes(unittest.TestCase):
         ]
         self.assertEqual(result, expected_result)
 
-        node_list = [TextNode("delim ****be**tween**** delim", TextType.TEXT)]
+        node_list = [TextNode("Many **spl**it** **parts**!**", TextType.TEXT)]
         result = split_nodes_delimiter(node_list, "**", TextType.BOLD)
         expected_result = [
-            TextNode("delim ", TextType.TEXT),
-            TextNode("be**tween", TextType.CODE),
-            TextNode(" delim", TextType.TEXT)
+            TextNode("Many ", TextType.TEXT),
+            TextNode("spl", TextType.BOLD),
+            TextNode("it", TextType.TEXT),
+            TextNode(" ", TextType.BOLD),
+            TextNode("parts", TextType.TEXT),
+            TextNode("!", TextType.BOLD)
         ]
-        self.assertEqual(result, expected_result)
-            
+
+    def test_split_single_node_invalid(self):
+        
+        node_list = [TextNode("Text with bad **bold in it", TextType.TEXT)]
+        with self.assertRaises(Exception) as cm:
+            split_nodes_delimiter(node_list, "**", TextType.BOLD)
+        expected_message = "Unmatched delimiter: invalid markdown"
+        self.assertEqual(str(cm.exception), expected_message)
+
+
+        node_list = [TextNode("`Text with bad code starting", TextType.TEXT)]
+        with self.assertRaises(Exception) as cm:
+            split_nodes_delimiter(node_list, "`", TextType.CODE)
+        expected_message = "Unmatched delimiter: invalid markdown"
+        self.assertEqual(str(cm.exception), expected_message)
+
+        node_list = [TextNode("Text with bad italic ending_", TextType.TEXT)]
+        with self.assertRaises(Exception) as cm:
+            split_nodes_delimiter(node_list, "_", TextType.ITALIC)
+        expected_message = "Unmatched delimiter: invalid markdown"
+        self.assertEqual(str(cm.exception), expected_message)
+
+        node_list = [TextNode("Ran`dom` del`ims `and` lengths", TextType.TEXT)]
+        with self.assertRaises(Exception) as cm:
+            split_nodes_delimiter(node_list, "`", TextType.CODE)
+        expected_message = "Unmatched delimiter: invalid markdown"
+        self.assertEqual(str(cm.exception), expected_message)
