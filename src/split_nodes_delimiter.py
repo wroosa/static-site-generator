@@ -7,7 +7,9 @@ def skip(iterator, n):
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
 
+    # new list of nodes
     new_nodes = []
+
     for node in old_nodes:
 
         # Only split nodes that are text
