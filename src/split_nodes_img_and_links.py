@@ -33,8 +33,10 @@ def split_nodes_images(old_nodes):
 
                     parts = remaining_text.split(markdown, 1)
 
-                    pre_text_node = TextNode(parts[0], TextType.TEXT)
-                    new_nodes.append(pre_text_node)
+                    # If there the text before the image is an empty string do not append it
+                    if parts[0] != "":
+                        pre_text_node = TextNode(parts[0], TextType.TEXT)
+                        new_nodes.append(pre_text_node)
 
                     image_node = TextNode(image[0], TextType.IMAGE, image[1])
                     new_nodes.append(image_node)
@@ -77,9 +79,11 @@ def split_nodes_links(old_nodes):
                     markdown = f'[{link[0]}]({link[1]})'
 
                     parts = remaining_text.split(markdown, 1)
-
-                    pre_text_node = TextNode(parts[0], TextType.TEXT)
-                    new_nodes.append(pre_text_node)
+                    
+                    # If there the text before the link is an empty string do not append it
+                    if parts[0] != "":
+                        pre_text_node = TextNode(parts[0], TextType.TEXT)
+                        new_nodes.append(pre_text_node)
 
                     link_node = TextNode(link[0], TextType.LINK, link[1])
                     new_nodes.append(link_node)

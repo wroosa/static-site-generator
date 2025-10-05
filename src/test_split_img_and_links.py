@@ -30,7 +30,6 @@ class TestSplitNodesImages(unittest.TestCase):
         expected = [
             TextNode("X", TextType.TEXT),
             TextNode("a", TextType.IMAGE, "u"),
-            TextNode("", TextType.TEXT),  # empty between adjacent images
             TextNode("b", TextType.IMAGE, "v"),
             TextNode("Y", TextType.TEXT),
         ]
@@ -39,7 +38,6 @@ class TestSplitNodesImages(unittest.TestCase):
     def test_image_at_start_and_trailing_text(self):
         old = [TextNode("![a](u) tail", TextType.TEXT)]
         expected = [
-            TextNode("", TextType.TEXT),  # empty before start image
             TextNode("a", TextType.IMAGE, "u"),
             TextNode(" tail", TextType.TEXT),
         ]
@@ -101,7 +99,6 @@ class TestSplitNodesImages(unittest.TestCase):
     def test_images_and_links_adjacent(self):
         s = TextNode("![i](u)[t](v)", TextType.TEXT)
         expected = [
-            TextNode("", TextType.TEXT),
             TextNode("i", TextType.IMAGE, "u"),
             TextNode("[t](v)", TextType.TEXT),
         ]
@@ -134,7 +131,6 @@ class TestSplitNodesLinks(unittest.TestCase):
         expected = [
             TextNode("X", TextType.TEXT),
             TextNode("a", TextType.LINK, "u"),
-            TextNode("", TextType.TEXT),
             TextNode("b", TextType.LINK, "v"),
             TextNode("Y", TextType.TEXT),
         ]
@@ -143,7 +139,6 @@ class TestSplitNodesLinks(unittest.TestCase):
     def test_link_at_start_and_trailing_text(self):
         old = [TextNode("[a](u) tail", TextType.TEXT)]
         expected = [
-            TextNode("", TextType.TEXT),
             TextNode("a", TextType.LINK, "u"),
             TextNode(" tail", TextType.TEXT),
         ]

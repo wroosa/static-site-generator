@@ -5,6 +5,10 @@ from textnode import TextType, TextNode
 
 
 def text_to_textnodes(text):
+
+    # Empty strings should return no nodes
+    if text == "":
+        return []
     
     # Create a text node from intial text
     text_nodes = [TextNode(text, TextType.TEXT)]
@@ -18,7 +22,6 @@ def text_to_textnodes(text):
 
     # Call delimiter split for all text emphasis types
     for text_type in emphasis_types:
-        print(text_type)
         text_nodes = split_nodes_delimiter(text_nodes, text_type.value, text_type)
 
     # Split out images and links
@@ -26,9 +29,3 @@ def text_to_textnodes(text):
     text_nodes = split_nodes_links(text_nodes)
 
     return text_nodes
-
-
-
-test = 'This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)'
-
-pprint(text_to_textnodes(test))
