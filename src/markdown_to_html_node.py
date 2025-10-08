@@ -118,8 +118,3 @@ def text_to_children(text):
 # Function to get the correct header html tag
 def get_header_tag(text):
     return f'h{text.find(' ')}'
-
-
-md = '   \n  \n'
-
-print(markdown_to_html_node(md))
