@@ -3,15 +3,18 @@ from block_to_block_type import block_to_block_type, BlockType
 from htmlnode import LeafNode, ParentNode
 from text_to_textnodes import text_to_textnodes
 from text_to_html import text_node_to_html_node
-from bs4 import BeautifulSoup
 from textnode import TextNode, TextType
 
 
 def markdown_to_html_node(markdown):
     
+    # Split markdown into blocks
     blocks = markdown_to_blocks(markdown)
 
+    # Initialize list of HTML nodes representing doc
     html_nodes = []
+
+    # Process each block
     for block in blocks:
         
         b_type = block_to_block_type(block)
@@ -85,13 +88,22 @@ def markdown_to_html_node(markdown):
                 html_nodes.append(ParentNode('ul', list_items))
 
 
-            # case BlockType.ORDERED_LIST:
+            case BlockType.ORDERED_LIST:
 
-            
-    
+                # Split into lines and strip markdown. Then parse inline markdown and create a list item element for each line
+                list_items = []
+                for i, lines in enumerate(block.splitlines(keepends=True)):
+                    lines_parsed = lines.removeprefix(f'{i+1}. ')
+                    children = text_to_children(lines_parsed)
+                    list_items.append(ParentNode('li', children))
+
+                html_nodes.append(ParentNode('ol', list_items))
+
+    # Return all html nodes nested inside a div
     return ParentNode('div', html_nodes)
 
-        
+
+# Function to process text with inline markdown into text nodes then html nodes
 def text_to_children(text):
 
     text_nodes = text_to_textnodes(text)
@@ -103,43 +115,6 @@ def text_to_children(text):
 
     return children
 
+# Function to get the correct header html tag
 def get_header_tag(text):
     return f'h{text.find(' ')}'
-
-
-
-md = """
-# This is a header
-
-This is **bolded** paragraph
-text in a p
-tag here
-
-```
-for line in lines:
-    print(line)
-return None
-```
-
-- a list
-- a list
-- I wish for a list
-
-This is another paragraph with _italic_ text and `code` here
-
->     quoteblock
->type thing
->
-> here
-> with odd spacing
-
-"""
-
-output = """<div><p>This is <b>bolded</b> paragraph text in a p tag here</p><p>This is another paragraph with <i>italic</i> text and <code>code</code> here</p></div>"""
-node = markdown_to_html_node(md)
-html = node.to_html()
-
-soup = BeautifulSoup(html, 'html.parser')
-pretty_html = soup.prettify()
-print(pretty_html)
-print(pretty_html == output)
