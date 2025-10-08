@@ -71,7 +71,19 @@ def markdown_to_html_node(markdown):
 
                 html_nodes.append(ParentNode('blockquote', quote_children))
 
-            # case BlockType.UNORDERED_LIST:
+            case BlockType.UNORDERED_LIST:
+
+                # Split into lines and strip markdown
+                lines = [s[2:] for s in block.splitlines(keepends=True)]
+
+                # Parse inline markdown and create a list item element for each line to append as children of the ul element
+                list_items = []
+                for line in lines:
+                    children = text_to_children(line)
+                    list_items.append(ParentNode('li', children))
+
+                html_nodes.append(ParentNode('ul', list_items))
+
 
             # case BlockType.ORDERED_LIST:
 
@@ -109,7 +121,9 @@ for line in lines:
 return None
 ```
 
-
+- a list
+- a list
+- I wish for a list
 
 This is another paragraph with _italic_ text and `code` here
 
