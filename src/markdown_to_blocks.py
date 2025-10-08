@@ -9,7 +9,8 @@ def markdown_to_blocks(doc):
     parts = doc.split("\n\n")
 
     for part in parts:
-        if part !="":
-            blocks.append(part.strip())
+        stripped_block = part.strip()
+        if stripped_block != "":
+            blocks.append(stripped_block)
     
     return blocks

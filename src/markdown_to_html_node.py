@@ -55,7 +55,7 @@ def markdown_to_html_node(markdown):
 
             case BlockType.QUOTE:
 
-                # Split into lines and strip markdown
+                # Split into lines and strip markdown.
                 lines = block.splitlines(keepends=True)
                 parsed_lines = []
 
@@ -77,7 +77,7 @@ def markdown_to_html_node(markdown):
             case BlockType.UNORDERED_LIST:
 
                 # Split into lines and strip markdown
-                lines = [s[2:] for s in block.splitlines(keepends=True)]
+                lines = [s[2:] for s in block.splitlines()]
 
                 # Parse inline markdown and create a list item element for each line to append as children of the ul element
                 list_items = []
@@ -92,7 +92,7 @@ def markdown_to_html_node(markdown):
 
                 # Split into lines and strip markdown. Then parse inline markdown and create a list item element for each line
                 list_items = []
-                for i, lines in enumerate(block.splitlines(keepends=True)):
+                for i, lines in enumerate(block.splitlines()):
                     lines_parsed = lines.removeprefix(f'{i+1}. ')
                     children = text_to_children(lines_parsed)
                     list_items.append(ParentNode('li', children))
@@ -118,3 +118,8 @@ def text_to_children(text):
 # Function to get the correct header html tag
 def get_header_tag(text):
     return f'h{text.find(' ')}'
+
+
+md = '   \n  \n'
+
+print(markdown_to_html_node(md))
