@@ -1,0 +1,60 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*$py.class
+
+# ---- Virtual Environments ----
+.env
+.venv
+env/
+venv/
+ENV/
+
+# ---- Build & Distribution ----
+build/
+dist/
+*.egg-info/
+.eggs/
+.installed.cfg
+*.egg
+
+# ---- IDE / Editor ----
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ---- OS Files ----
+.DS_Store
+Thumbs.db
+
+# ---- Testing / Coverage ----
+.coverage
+.cache/
+nosetests.xml
+coverage.xml
+htmlcov/
+.tox/
+.pytest_cache/
+
+# ---- Logs & Temp ----
+*.log
+*.tmp
+*.swp
+*.bak
+
+# ---- Jupyter / Notebooks ----
+.ipynb_checkpoints/
+*.ipynb_save
+
+# ---- Project Specific ----
+# Ignore compiled site or docs
+site/
+docs/_build/
+public/
+
+# Ignore local secrets or configs
+config.local.json
+.env.local
