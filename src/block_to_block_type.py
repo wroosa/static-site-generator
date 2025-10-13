@@ -11,7 +11,7 @@ class BlockType(Enum):
     UNORDERED_LIST = r'^(-\s.*)(\n-\s.*)*$'
     ORDERED_LIST = '123'
 
-
+# starts with 1-6 '#'s followed by exactly 1 space
 def is_header(s):
     return bool(re.match(r'^#{1,6}\s',s))
 

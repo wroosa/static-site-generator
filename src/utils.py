@@ -19,16 +19,6 @@ def copy_dir(from_dir, to_dir):
     
     if from_path.is_file():
         raise Exception("Error: From path is a file and not a directory")
-    
-    # Delete all items in the target directory
-    try:
-        for item in to_path.iterdir():
-            if item.is_dir():
-                shutil.rmtree(item)
-            else:
-                item.unlink()
-    except:
-        raise Exception(f'Error deleting contents of public directory')
 
     # Easy method
     # from_path.copy_into(to_path)
@@ -59,3 +49,24 @@ def path_in_working_dir(path):
         return False
     else:
         return True
+    
+def clean_dir(path):
+
+    working_path = Path().resolve()
+    path_to_clean = (working_path / Path(path)).resolve()
+
+    # Make sure the path is not a file and is in the working directory
+    if not path_in_working_dir(path_to_clean):
+        raise Exception("Error: Path to clean is outside the working directory")
+    if path_to_clean.is_file():
+        raise Exception("Error: Path to clean is a file and not a directory")
+    
+    # Delete all items in the target directory
+    try:
+        for item in path_to_clean.iterdir():
+            if item.is_dir():
+                shutil.rmtree(item)
+            else:
+                item.unlink()
+    except:
+        raise Exception(f'Error deleting contents of public directory')
