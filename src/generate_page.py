@@ -16,12 +16,12 @@ def generate_page(from_path, template_path, dest_path):
     content = markdown_to_html_node(markdown).to_html()
     title = extract_title(markdown)
     html = template.replace('{{ Title }}', title).replace('{{ Content }}', content)
-    pretty_html = BeautifulSoup(html).prettify()
+    # pretty_html = BeautifulSoup(html).prettify()
 
     # Create the HTML file and write the HTML to it
     html_file = Path(dest_path)
     html_file.parent.mkdir(parents=True, exist_ok=True)
-    html_file.write_text(pretty_html)
+    html_file.write_text(html)
 
 
     
