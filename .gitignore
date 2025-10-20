@@ -52,8 +52,6 @@ htmlcov/
 # ---- Project Specific ----
 # Ignore compiled site or docs
 site/
-docs/_build/
-public/
 
 # Ignore local secrets or configs
 config.local.json
