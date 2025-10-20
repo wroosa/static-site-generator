@@ -18,7 +18,7 @@ def main():
 
    clean_dir('docs')
    copy_dir('static', 'docs')
-   generate_pages_rescursive('content', 'template.html', 'docs', base_path)
+   generate_pages_rescursive('content', 'templates/template.html', 'docs', base_path)
     
 if __name__ == "__main__":
     main()
