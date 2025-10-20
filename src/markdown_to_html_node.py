@@ -65,23 +65,23 @@ def markdown_to_html_node(markdown):
 
                 # Split on double new lines, process inline markdown and create paragaph html tags
 
-                # TO PASS TEST -- UNCOMMENT
-                # paragraphs = "".join(parsed_lines).split('\n\n')
+                # COMMENT TO PASS BOOTS TEST
+                paragraphs = "".join(parsed_lines).split('\n\n')
 
-                # quote_children = []
+                quote_children = []
 
-                # for text in paragraphs:
-                #     children = text_to_children(text)
-                #     quote_children.append(ParentNode('p', children))
-                # TO PASS TEST -- UNCOMMENT
+                for text in paragraphs:
+                    children = text_to_children(text)
+                    quote_children.append(ParentNode('p', children))
+                # COMMENT TO PASS BOOTS TEST
                 
-                # Just to pass test
-                paragraphs = "".join(parsed_lines)
-                children = text_to_children(paragraphs)
-                html_nodes.append(ParentNode('blockquote', children))
+                # Code to pass Boots tests
+                # paragraphs = "".join(parsed_lines)
+                # children = text_to_children(paragraphs)
+                # html_nodes.append(ParentNode('blockquote', children))
 
-                # TO PASS TEST UNCOMMENT
-                # html_nodes.append(ParentNode('blockquote', quote_children))
+                # COMMENT TO PASS BOOTS TEST
+                html_nodes.append(ParentNode('blockquote', quote_children))
 
             case BlockType.UNORDERED_LIST:
 
