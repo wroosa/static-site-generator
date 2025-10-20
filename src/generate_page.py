@@ -3,7 +3,7 @@ from extract_title import extract_title
 from pathlib import Path
 from bs4 import BeautifulSoup
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, base_path):
     print(f'Generating page from {from_path} to {dest_path} using {template_path}')
 
     with open(from_path, 'r') as file:
@@ -15,7 +15,15 @@ def generate_page(from_path, template_path, dest_path):
     # Create the final HTML based on the markdown and template
     content = markdown_to_html_node(markdown).to_html()
     title = extract_title(markdown)
-    html = template.replace('{{ Title }}', title).replace('{{ Content }}', content)
+    html = (
+        template
+        .replace('{{ Title }}', title)
+        .replace('{{ Content }}', content)
+        .replace('href="/', f'href="{base_path}')
+        .replace('src="/', f'src="{base_path}')
+    )
+
+
     # pretty_html = BeautifulSoup(html).prettify()
 
     # Create the HTML file and write the HTML to it

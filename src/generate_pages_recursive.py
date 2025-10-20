@@ -2,7 +2,12 @@ from generate_page import generate_page
 from utils import path_in_working_dir
 from pathlib import Path
 
-def generate_pages_rescursive(dir_path_contet, template_path, dest_dir_path):
+def generate_pages_rescursive(
+        dir_path_contet, 
+        template_path, 
+        dest_dir_path, 
+        base_path
+    ):
 
     # Check paths are in working directory and are directories
     working_path = Path().resolve()
@@ -29,7 +34,7 @@ def generate_pages_rescursive(dir_path_contet, template_path, dest_dir_path):
         raise Exception("Error: page template path is not a file")
     
     # Recursive helper function to run after validating arguments
-    def _gen_pages_recursive(c_path, t_path, d_path):
+    def _gen_pages_recursive(c_path, t_path, d_path, b_path):
 
         items = c_path.iterdir()
 
@@ -37,11 +42,16 @@ def generate_pages_rescursive(dir_path_contet, template_path, dest_dir_path):
             dest_path = (d_path / item.name)
             if item.is_dir():
                 dest_path.mkdir()
-                _gen_pages_recursive(item, t_path, dest_path)
+                _gen_pages_recursive(item, t_path, dest_path, b_path)
             elif item.suffix == '.md':
-                generate_page(item, t_path, dest_path.with_suffix('.html'))
+                generate_page(
+                    item, 
+                    t_path, 
+                    dest_path.with_suffix('.html'), 
+                    base_path
+                )
     
-    return _gen_pages_recursive(cont_path, temp_path, dest_path)
+    return _gen_pages_recursive(cont_path, temp_path, dest_path, base_path)
     
 
     
